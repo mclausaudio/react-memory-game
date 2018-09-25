@@ -1,0 +1,13 @@
+header {
+    display:flex;
+    justify-content:space-between;
+    padding: 0 2rem 0 2rem;
+}
+
+h3 {
+    padding:1rem;
+}
+
+.nav-div {
+    display:flex;
+}

@@ -4,4 +4,6 @@
     background-color:grey;
     margin:.8rem;
     display:inline-block;
+    transition: background-color .5s;
+    border-radius: 20px;
 }

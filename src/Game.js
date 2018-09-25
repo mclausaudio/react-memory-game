@@ -40,10 +40,11 @@ class Game extends Component {
   }
   
   handleClick(id){
+    //takes array of cards, array of card id's to change, and the state they should have.
     const mapCardState = (cards, idsToChange, newCardState) => {
       //maps over cards array
       return cards.map(c => {
-        ///if the current card is included in idsToChange, change the current cards cardState, else just return it unmodified
+        ///if the current card id matches any of the ids we need to change, change the current cards cardState, else just return it unmodified
         if (idsToChange.includes(c.id)) {
           return {
             ...c,
@@ -55,19 +56,19 @@ class Game extends Component {
     }
     //next, we'll grab the card we want out of the array
     const foundCard = this.state.cards.find(c => c.id === id);
-    
+    //if the play clicks a card that is already showing, or noClick is active(they've won) then return and exit function
     if (this.state.noClick || foundCard.cardState !== CardState.HIDING) {
       return;
     }
-    
+    //noClick refers if they use is unable to click (for ex 2 cards are showing)
     let noClick = false;
-    
+    //map the card that we clicked on to be showing
     let cards = mapCardState(this.state.cards, [id], CardState.SHOWING);
-    
+    //filter to only show the showing cards
     const showingCards = cards.filter((c)=>c.cardState === CardState.SHOWING);
-    
+    ///now lets get jut the id of the showing cards
     const ids = showingCards.map(c => c.id);
-    
+    //at this point we have an array of showing cards w ids, check if we have 2 showing cards and if their background colors match
     if (showingCards.length === 2 &&
         showingCards[0].backgroundColor === showingCards[1].backgroundColor) {
           cards = mapCardState(cards, ids, CardState.MATCHING);
@@ -84,9 +85,10 @@ class Game extends Component {
       });
       return;
     }
-    
+    //the only way we reach here is if there is a) 1 card showing, b) 2 cards showing that match
     this.setState({cards, noClick});
     
+    //below was previously used to make sure onclick was working, just getting cards to show, but no game logic
     // this.setState(prevState => {
     //   let cards = prevState.cards.map((c) => (
     //     c.id === id ? {
